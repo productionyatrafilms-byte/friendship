@@ -1,0 +1,695 @@
+    @font-face {
+      font-family: "BalooRegular";
+      src: url("../../fonts/Baloo Regular 400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "MouseMemoirs";
+      /* src: url("../fonts/MouseMemoirs-Regular.ttf") format("truetype"); */
+      src: url("../../fonts/MouseMemoirs-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
+    @font-face {
+      font-family: "NotoSansGujaratiBold";
+      src: url("../../fonts/NotoSansGujarati-Bold.ttf") format("truetype");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "NotoSansGujaratiRegular";
+      src: url("../../fonts/NotoSansGujarati-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      width: 100vw !important;
+      height: auto;
+      overflow-y: scroll;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      font-family: "MouseMemoirs";
+    }
+
+
+    .title {
+      position: absolute;
+      top: 1vw;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "MouseMemoirs";
+      z-index: 100;
+      border: 0.3vw solid #F6ED76;
+      padding: 0.3vw 2vw;
+      border-radius: 1.5vw;
+    }
+
+    .title span {
+      display: block;
+      color: white;
+      font-size: 7vw;
+      line-height: 1;
+    }
+
+    html[lang="Hindi"] .title,
+    html[lang="Gujarati"] .title {
+      padding: 1.5vw 2vw 0.5vw 2vw;
+    }
+
+    html[lang="Hindi"] .title span {
+      font-size: 5vw;
+      font-weight: 700;
+    }
+
+    html[lang="Gujarati"] .title span {
+      font-size: 5vw;
+      font-weight: 700;
+    }
+
+    .language-container {
+      position: fixed;
+      top: 3vw;
+      right: 4%;
+      display: flex;
+      width: 8.4vw;
+      padding: 0.2vw;
+      height: auto;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "BalooRegular";
+      border: 0.2vw solid white;
+      border-radius: 50vw;
+      z-index: 9999;
+    }
+
+    .language-container div {
+      width: 2.2vw;
+      height: 2.2vw;
+      font-size: 1.7vw;
+      text-align: center;
+      border: 0.2vw solid #ffffff;
+      background: transparent;
+      color: #ffffff;
+      cursor: pointer;
+      pointer-events: auto;
+      border-radius: 50%;
+      z-index: 100;
+      font-family: "BalooRegular", sans-serif;
+    }
+
+    .language-container div:hover {
+      color: #6168EA;
+      background-color: white;
+    }
+
+    .language-container div.active {
+      color: #6168EA;
+      background-color: white;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 3vw;
+      left: 3%;
+      width: 3vw;
+      height: auto;
+      z-index: 50;
+      transform: scale(1);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .home-btn img {
+      width: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .home-btn:hover {
+      transform: scale(1.2);
+    }
+
+    main {
+      position: relative;
+      width: 100%;
+      height: 48vw;
+      overflow-x: hidden;
+    }
+
+    .circle,
+    .circle-1 {
+      text-decoration: none;
+      position: absolute;
+      width: 20vw;
+      height: 20vw;
+      transform: scale(1);
+    }
+
+    main a img,
+    main div img {
+      width: 100%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+    }
+
+    .circle-1 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .circle-2 {
+      top: 15%;
+      left: 22%;
+    }
+
+    .circle-3 {
+      top: 15%;
+      left: 60%;
+    }
+
+    .circle-4 {
+      top: 60%;
+      left: 30%;
+    }
+
+    .expression-1,
+    .expression-2,
+    .expression-3,
+    .expression-4 {
+      position: absolute;
+      width: 60%;
+      object-fit: contain;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* .expression-2,
+    .expression-3,
+    .expression-4 {
+      display: none;
+    } */
+
+    .expression-5,
+    .expression-6,
+    .expression-7 {
+      position: absolute;
+      width: 100%;
+      object-fit: contain;
+      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+    }
+
+    .circle {
+      transform: scale(1);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .circle:hover {
+      transform: scale(1.1);
+    }
+
+    /* default state */
+    .expression-1 {
+      display: block;
+    }
+
+    .expression-2,
+    .expression-3,
+    .expression-4,
+    .expression-5,
+    .expression-6,
+    .expression-7 {
+      display: none;
+    }
+
+    /* hover on circle-2 */
+    .circle-2:hover .expression-5 {
+      display: block;
+    }
+
+    .circle-2:hover~.circle-1 .expression-1 {
+      display: none;
+    }
+
+    .circle-2:hover~.circle-1 .expression-3 {
+      display: block;
+    }
+
+    /* hover on circle-3 */
+    .circle-3:hover .expression-6 {
+      display: block;
+    }
+
+    .circle-3:hover~.circle-1 .expression-1 {
+      display: none;
+    }
+
+    .circle-3:hover~.circle-1 .expression-2 {
+      display: block;
+    }
+
+    /* hover on circle-4 */
+    .circle-4:hover .expression-7 {
+      display: block;
+    }
+
+    .circle-4:hover~.circle-1 .expression-1 {
+      display: none;
+    }
+
+    .circle-4:hover~.circle-1 .expression-4 {
+      display: block;
+    }
+
+    .caption {
+      width: 15vw;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3vw;
+      font-family: "MouseMemoirs";
+      text-decoration: none;
+      color: white;
+      z-index: -10;
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 1s ease;
+    }
+
+    .circle-2 .caption {
+      text-align: right;
+    }
+
+    .circle-3 .caption,
+    .circle-4 .caption {
+      text-align: left;
+    }
+
+    .circle-2:hover .caption {
+      opacity: 1;
+      transform: translate(-170%, -50%);
+      animation: jiggleLeft 0.45s ease-in-out 0.6s 1;
+    }
+
+    .circle-3:hover .caption,
+    .circle-4:hover .caption {
+      opacity: 1;
+      transform: translate(70%, -50%);
+      animation: jiggleRight 0.45s ease-in-out 0.6s 1;
+    }
+
+    @keyframes jiggleLeft {
+      0% {
+        transform: translate(-170%, -50%);
+      }
+
+      25% {
+        transform: translate(-174%, -50%);
+      }
+
+      75% {
+        transform: translate(-168%, -50%);
+      }
+
+      100% {
+        transform: translate(-170%, -50%);
+      }
+    }
+
+    @keyframes jiggleRight {
+      0% {
+        transform: translate(70%, -50%);
+      }
+
+      25% {
+        transform: translate(74%, -50%);
+      }
+
+      75% {
+        transform: translate(68%, -50%);
+      }
+
+      100% {
+        transform: translate(70%, -50%);
+      }
+    }
+
+    .pages {
+      position: absolute;
+      top: 50%;
+      right: 3%;
+      transform: translateY(-50%) scale(1);
+      width: 5vw;
+      height: auto;
+      display: inline-flex;
+      gap: 1.5vw;
+      align-items: center;
+      flex-direction: column;
+      justify-content: space-between;
+
+    }
+
+    .pages .page {
+      width: 3.5vw;
+      height: 3.5vw;
+      border-radius: 50%;
+      border: 0.3vw solid #F6ED76;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      font-size: 2.5vw;
+      color: #6168EA;
+      background-color: white;
+      transform: scale(1);
+      transition: transform 0.3s ease;
+    }
+
+    .page:hover {
+      color: white;
+      background-color: #6168EA;
+      transform: scale(1.1);
+    }
+
+    .page.active {
+      opacity: 0.5;
+      transform: scale(0.95);
+    }
+
+    .swiper {
+      width: 80%;
+      height: 100%;
+      padding: 10vw auto;
+      position: relative;
+    }
+
+    .swiper-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide {
+      margin-top: 10vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100% !important;
+      height: auto;
+      border-radius: 20px;
+      opacity: 0 !important;
+      transition: opacity 0.8s ease !important;
+    }
+
+    .swiper-slide-active {
+      opacity: 1 !important;
+    }
+
+    .image-box {
+      width: 40vw;
+      height: auto;
+      border: 0.4vw solid #f6ed76;
+      border-radius: 3vw;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    .image-box video {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    .swiper-text {
+      color: white;
+      padding: 2.5vw 0;
+      font-size: 4vw;
+      text-align: center;
+    }
+
+    .custom-nav {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .custom-prev,
+    .custom-next {
+      position: absolute;
+      pointer-events: auto;
+      border: none;
+      background: rgba(255, 255, 255, 0.403);
+      color: #6168ea;
+      font-family: "BalooRegular", sans-serif;
+      font-size: 1.5vw;
+      border-radius: 50vw;
+      cursor: pointer;
+      width: 3vw;
+      height: 3vw;
+      text-align: center;
+      transform: scale(1);
+      transition: transform 0.5s ease;
+      border: 0.2vw solid white;
+    }
+
+    .custom-prev:hover,
+    .custom-next:hover {
+      transform: scale(1.12);
+      background-color: white;
+    }
+
+    .custom-nav i,
+    .custom-prev i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white !important;
+    }
+
+    .custom-next-2,
+    .custom-prev-2 {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .custom-prev .custom-prev-1,
+    .custom-next .custom-next-1 {
+      opacity: 1;
+      /* color: gray!important; */
+    }
+
+    .custom-prev:hover .custom-prev-2,
+    .custom-next:hover .custom-next-2 {
+      opacity: 1;
+      color: gray !important;
+    }
+
+    .custom-prev:hover .custom-prev-1,
+    .custom-next:hover .custom-next-1 {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .custom-prev {
+      left: 8vw;
+    }
+
+    .custom-next {
+      right: 8vw;
+    }
+
+    .custom-prev.hidden,
+    .custom-next.hidden {
+      display: none;
+    }
+
+
+    .swiper-pagination {
+      position: relative;
+      bottom: 2% !important;
+      transform: translateY(-50%);
+      text-align: center;
+      width: 100%;
+    }
+
+    .swiper-pagination-bullet {
+      width: 1vw !important;
+      height: 1vw !important;
+      background: transparent;
+      background-color: #F6ED76;
+      opacity: 1;
+      margin: 0 0.2vw !important;
+      transform: scaleX(1);
+      transition: width 5s ease border-radius 0.1s ease;
+      border-radius: 50% !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: #F6ED76 !important;
+      border-radius: 1vw !important;
+      width: 1.5vw !important;
+    }
+
+    .swiper-pagination .manual-bullet {
+      width: 1.3vw;
+      height: 0.7vw;
+      min-width: 18px;
+      min-height: 12px;
+      border-radius: 999px;
+      background: #f6ed76;
+      display: inline-block;
+      position: relative;
+      top: auto;
+      left: auto;
+      z-index: 100;
+    }
+
+    .pranam-container {
+      position: absolute;
+      width: 45vw;
+      height: auto;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pranam-container>.pranam-img {
+      position: relative;
+      width: 85%;
+      height: auto;
+      display: block;
+    }
+
+    .pranam-container>.pranam-img>img {
+      width: 100%;
+      display: block;
+    }
+
+    .pranam-img span {
+      z-index: 15;
+      position: absolute;
+      top: 17%;
+      left: 50%;
+      font-size: 3.4vw;
+      transform: translateX(-50%);
+      font-family: "BalooRegular";
+    }
+
+    .pranam-container .home-btn-1 {
+      position: absolute;
+      top: 88%;
+      left: 35%;
+      transform: translateX(-50%);
+      width: 15vw;
+      height: auto;
+      transform: scale(1);
+      transition: transform 0.2s ease;
+    }
+
+    .home-btn-1:hover {
+      transform: scale(1.2);
+    }
+
+    .pranam-container .home-btn-1 img {
+      width: 100%;
+      display: block;
+    }
+
+    .home-btn-1 span {
+      z-index: 15;
+      position: absolute;
+      top: 45%;
+      left: 38%;
+      font-size: 2.5vw;
+      transform: translateY(-50%);
+      font-family: "BalooRegular";
+      color: #821b00;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 4%;
+      top: 4%;
+      width: 3vw;
+      height: 3vw;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      transform: scale(1);
+      transition: transform 0.3s ease;
+      z-index: 50;
+    }
+
+    .back-btn i {
+      color: #6168EA;
+      font-size: 1.3vw;
+      font-weight: 700;
+      transition: font-size 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+      background-color: #6168EA;
+    }
+
+    .back-btn:hover i {
+      font-size: 1.5vw;
+      color: white !important;
+    }
+
+    .pranam-img span {
+      color: #802922;
+    }

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-lang-key="title-1"></title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <style>
+      body {
+        background-image: url("./assets/images/bg-image-1.png");
+      }
+
+      .title span {
+        font-size: 5vw;
+      }
+
+      .title {
+        border-radius: 1.5vw;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="home-btn" href="index.html">
+      <img src="./assets/images/home-btn.png" alt="" />
+    </a>
+
+    <div class="title">
+      <span data-lang-key="title-1">Title</span>
+    </div>
+
+    <div class="language-container">
+      <div class="english active">E</div>
+      <div class="hindi">H</div>
+      <div class="gujarati">G</div>
+    </div>
+
+    <main>
+      <div class="pages">
+        <a
+          class="page page-1"
+          data-lang-key="num-1"
+          href="what-is-friendship.html"
+        ></a>
+        <a
+          class="page page-2"
+          data-lang-key="num-2"
+          href="why-do-we-need-friend.html"
+        ></a>
+        <a
+          class="page page-3"
+          data-lang-key="num-3"
+          href="friendship-grow.html"
+        ></a>
+      </div>
+
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="image-box">
+              <video src="./assets/video/1.mp4" autoplay muted loop></video>
+            </div>
+            <div class="swiper-text" data-lang-key="slide-1.1"></div>
+          </div>
+        </div>
+
+        <div class="swiper-pagination">
+          <span class="manual-bullet"></span>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".mySwiper", {
+        loop: false,
+        slidesPerView: 1,
+        spaceBetween: 20,
+      });
+    </script>
+
+    <script src="./assets/js/app.js"></script>
+  </body>
+</html>
