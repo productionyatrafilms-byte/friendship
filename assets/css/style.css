@@ -51,7 +51,7 @@
     body {
       width: 100vw !important;
       height: auto;
-      overflow-y: scroll;
+
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
