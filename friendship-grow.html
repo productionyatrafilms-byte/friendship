@@ -22,7 +22,7 @@
       }
 
       .title span {
-        font-size: 5vw;
+        font-size: 5vw!important;
       }
 
       .title {
@@ -36,9 +36,12 @@
 
       html[lang="Hindi"] .title span,
       html[lang="Gujarati"] .title span {
-        font-size: 4vw;
+        font-size: 4vw!important;
         font-weight: 700;
       }
+      .hidden {
+  display: none !important;
+}
     </style>
   </head>
 
@@ -154,6 +157,7 @@
             <i class="fa-solid fa-angle-left custom-prev-1"></i>
             <i class="fa-solid fa-angles-left custom-prev-2"></i>
           </button>
+
           <button class="custom-next">
             <i class="fa-solid fa-angle-right custom-next-1"></i>
             <i class="fa-solid fa-angles-right custom-next-2"></i>
@@ -162,64 +166,176 @@
 
         <div class="swiper-pagination"></div>
       </div>
+      <a href="pranam.html" class="pranam-link hidden">
+            <img src="./assets/images/arowAsset.png" alt="" />
+            <span data-lang-key="pranam"></span>
+          </a>
     </main>
+
+    <!-- Audios -->
+    <audio id="homeAudio" src="./assets/audio/pop.mp3" preload="auto"></audio>
+    <audio id="pageAudio" src="./assets/video/audio.mp3" preload="auto"></audio>
+    <audio id="navAudio" src="./assets/audio/11.mp3" preload="auto"></audio>
+
+    <audio id="engAudio" src="./assets/audio/Eng.mpeg" preload="auto"></audio>
+    <audio id="hinAudio" src="./assets/audio/Hin.mpeg" preload="auto"></audio>
+    <audio id="gujAudio" src="./assets/audio/Guj.mpeg" preload="auto"></audio>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-      const prevBtn = document.querySelector(".custom-prev");
-      const nextBtn = document.querySelector(".custom-next");
+  const prevBtn = document.querySelector(".custom-prev");
+  const nextBtn = document.querySelector(".custom-next");
+  const pranamLink = document.querySelector(".pranam-link");
 
-      const swiper = new Swiper(".mySwiper", {
-        loop: false,
-        slidesPerView: 1,
-        spaceBetween: 0,
-        effect: "fade",
-        fadeEffect: {
-          crossFade: true,
-        },
-        speed: 800,
-        allowTouchMove: false,
+  const swiper = new Swiper(".mySwiper", {
+    loop: false,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
+    speed: 800,
+    allowTouchMove: false,
 
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-          renderBullet: function (index, className) {
-            return `<span class="${className}"></span>`;
-          },
-        },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      renderBullet: function (index, className) {
+        return `<span class="${className}"></span>`;
+      },
+    },
 
-        on: {
-          init: function () {
-            updateNavButtons(this);
-          },
-          slideChange: function () {
-            updateNavButtons(this);
-          },
-        },
-      });
+    on: {
+      init: function () {
+        updateNavButtons(this);
+      },
+      slideChange: function () {
+        updateNavButtons(this);
+      },
+    },
+  });
 
-      function updateNavButtons(swiperInstance) {
-        prevBtn.classList.toggle("hidden", swiperInstance.isBeginning);
+  function updateNavButtons(swiperInstance) {
+    // Hide prev button on first slide
+    prevBtn.classList.toggle("hidden", swiperInstance.isBeginning);
 
-        /* next button should always stay visible */
-        nextBtn.classList.remove("hidden");
-      }
+    // Hide next button on last slide
+    nextBtn.classList.toggle("hidden", swiperInstance.isEnd);
 
-      prevBtn.addEventListener("click", function () {
-        if (!swiper.isBeginning) {
-          swiper.slidePrev();
+    // Show pranam link only on last slide
+    pranamLink.classList.toggle("hidden", !swiperInstance.isEnd);
+  }
+
+  prevBtn.addEventListener("click", function () {
+    if (!swiper.isBeginning) {
+      swiper.slidePrev();
+    }
+  });
+
+  nextBtn.addEventListener("click", function () {
+    if (!swiper.isEnd) {
+      swiper.slideNext();
+    }
+  });
+</script>
+
+    <script src="./assets/js/app.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const homeBtn = document.querySelector(".home-btn");
+        const pageBtns = document.querySelectorAll(".pages .page");
+        const navBtns = document.querySelectorAll(
+          ".custom-prev, .custom-next, .swiper-pagination span"
+        );
+
+        const englishBtn = document.querySelector(".english");
+        const hindiBtn = document.querySelector(".hindi");
+        const gujaratiBtn = document.querySelector(".gujarati");
+
+        const homeAudio = document.getElementById("homeAudio");
+        const pageAudio = document.getElementById("pageAudio");
+        const navAudio = document.getElementById("navAudio");
+
+        const engAudio = document.getElementById("engAudio");
+        const hinAudio = document.getElementById("hinAudio");
+        const gujAudio = document.getElementById("gujAudio");
+
+        function stopAllAudio() {
+          const audios = [
+            homeAudio,
+            pageAudio,
+            navAudio,
+            engAudio,
+            hinAudio,
+            gujAudio,
+          ];
+
+          audios.forEach((audio) => {
+            if (audio) {
+              audio.pause();
+              audio.currentTime = 0;
+            }
+          });
         }
-      });
 
-      nextBtn.addEventListener("click", function () {
-        if (swiper.isEnd) {
-          window.location.href = "pranam.html";
-        } else {
-          swiper.slideNext();
+        function playAudio(audio) {
+          if (!audio) return;
+
+          stopAllAudio();
+          audio.currentTime = 0;
+
+          const playPromise = audio.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+              console.log("Audio not playing. Check file path or browser:", error);
+            });
+          }
         }
+
+        homeBtn?.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          playAudio(homeAudio);
+
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 500);
+        });
+
+        pageBtns.forEach((pageBtn) => {
+          pageBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            playAudio(pageAudio);
+
+            setTimeout(() => {
+              window.location.href = this.href;
+            }, 600);
+          });
+        });
+
+        navBtns.forEach((navBtn) => {
+          navBtn.addEventListener("click", () => {
+            playAudio(navAudio);
+          });
+        });
+
+        englishBtn?.addEventListener("click", () => {
+          playAudio(engAudio);
+        });
+
+        hindiBtn?.addEventListener("click", () => {
+          playAudio(hinAudio);
+        });
+
+        gujaratiBtn?.addEventListener("click", () => {
+          playAudio(gujAudio);
+        });
       });
     </script>
-    <script src="./assets/js/app.js"></script>
   </body>
 </html>

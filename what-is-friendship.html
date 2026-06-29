@@ -53,11 +53,13 @@
           data-lang-key="num-1"
           href="what-is-friendship.html"
         ></a>
+
         <a
           class="page page-2"
           data-lang-key="num-2"
           href="why-do-we-need-friend.html"
         ></a>
+
         <a
           class="page page-3"
           data-lang-key="num-3"
@@ -71,6 +73,7 @@
             <div class="image-box">
               <video src="./assets/video/1.mp4" autoplay muted loop></video>
             </div>
+
             <div class="swiper-text" data-lang-key="slide-1.1"></div>
           </div>
         </div>
@@ -81,7 +84,17 @@
       </div>
     </main>
 
+    <!-- Audios -->
+    <audio id="homeAudio" src="./assets/audio/pop.mp3" preload="auto"></audio>
+    <audio id="pageAudio" src="./assets/video/audio.mp3" preload="auto"></audio>
+    <audio id="navAudio" src="./assets/audio/11.mp3" preload="auto"></audio>
+
+    <audio id="engAudio" src="./assets/audio/Eng.mpeg" preload="auto"></audio>
+    <audio id="hinAudio" src="./assets/audio/Hin.mpeg" preload="auto"></audio>
+    <audio id="gujAudio" src="./assets/audio/Guj.mpeg" preload="auto"></audio>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
       const swiper = new Swiper(".mySwiper", {
         loop: false,
@@ -91,5 +104,96 @@
     </script>
 
     <script src="./assets/js/app.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const homeBtn = document.querySelector(".home-btn");
+        const pageBtns = document.querySelectorAll(".pages .page");
+        const navBtn = document.querySelector(".manual-bullet");
+
+        const englishBtn = document.querySelector(".english");
+        const hindiBtn = document.querySelector(".hindi");
+        const gujaratiBtn = document.querySelector(".gujarati");
+
+        const homeAudio = document.getElementById("homeAudio");
+        const pageAudio = document.getElementById("pageAudio");
+        const navAudio = document.getElementById("navAudio");
+
+        const engAudio = document.getElementById("engAudio");
+        const hinAudio = document.getElementById("hinAudio");
+        const gujAudio = document.getElementById("gujAudio");
+
+        function stopAllAudio() {
+          const audios = [
+            homeAudio,
+            pageAudio,
+            navAudio,
+            engAudio,
+            hinAudio,
+            gujAudio,
+          ];
+
+          audios.forEach((audio) => {
+            if (audio) {
+              audio.pause();
+              audio.currentTime = 0;
+            }
+          });
+        }
+
+        function playAudio(audio) {
+          if (!audio) return;
+
+          stopAllAudio();
+          audio.currentTime = 0;
+
+          const playPromise = audio.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+              console.log("Audio not playing. Check file path or browser:", error);
+            });
+          }
+        }
+
+        homeBtn?.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          playAudio(homeAudio);
+
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 500);
+        });
+
+        pageBtns.forEach((pageBtn) => {
+          pageBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            playAudio(pageAudio);
+
+            setTimeout(() => {
+              window.location.href = this.href;
+            }, 600);
+          });
+        });
+
+        navBtn?.addEventListener("click", () => {
+          playAudio(navAudio);
+        });
+
+        englishBtn?.addEventListener("click", () => {
+          playAudio(engAudio);
+        });
+
+        hindiBtn?.addEventListener("click", () => {
+          playAudio(hinAudio);
+        });
+
+        gujaratiBtn?.addEventListener("click", () => {
+          playAudio(gujAudio);
+        });
+      });
+    </script>
   </body>
 </html>

@@ -469,6 +469,12 @@
       text-align: center;
     }
 
+        html[lang="Hindi"] .swiper-text,
+    html[lang="Gujarati"] .swiper-text {
+      font-size: 2.9vw;
+      font-weight: bolder;
+    }
+
     .custom-nav {
       position: absolute;
       top: 50%;
@@ -693,3 +699,55 @@
     .pranam-img span {
       color: #802922;
     }
+
+    
+.pranam-link {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 14vw;
+  top: 23vw;
+  width: 7vw;
+  height: auto;
+  text-decoration: none;
+
+  z-index: 9999;
+  pointer-events: auto;
+  cursor: pointer;
+
+  animation: pranamPop 1.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.pranam-link img {
+  position: relative;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.pranam-link span {
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3vw;
+  padding-right: 1vw;
+    font-family: "BalooRegular";
+
+}
+
+@keyframes pranamPop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

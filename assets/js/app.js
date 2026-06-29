@@ -7,10 +7,16 @@ const buttons = [btnEn, btnHi, btnGu].filter(Boolean);
 
 const LANG_KEY = "selectedLanguage";
 const DEFAULT_LANG = "English";
+const VALID_LANGS = ["English", "Hindi", "Gujarati"];
 
 let translations = {};
 
-const savedLangOnStart = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+function getSavedLang() {
+  const saved = localStorage.getItem(LANG_KEY);
+  return VALID_LANGS.includes(saved) ? saved : DEFAULT_LANG;
+}
+
+const savedLangOnStart = getSavedLang();
 
 document.documentElement.lang = savedLangOnStart;
 
@@ -46,7 +52,10 @@ function setLanguageAttribute(lang) {
 
 function applyLanguage(lang) {
   const langData = translations[lang];
-  if (!langData) return;
+  if (!langData) {
+    console.warn(`No translation data found for language: "${lang}"`);
+    return;
+  }
 
   setLanguageAttribute(lang);
 
@@ -76,18 +85,38 @@ function applyLanguage(lang) {
 
 async function loadTranslations() {
   try {
-    const savedLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+    const savedLang = getSavedLang();
     setLanguageAttribute(savedLang);
 
-    const response = await fetch("./assets/json/data.json", {
+    const basePath =
+      window.location.origin +
+      window.location.pathname.substring(
+        0,
+        window.location.pathname.lastIndexOf("/") + 1
+      );
+
+    const response = await fetch(`${basePath}assets/json/data.json`, {
       cache: "no-store",
     });
 
-    translations = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        `Could not load data.json — HTTP ${response.status}: ${response.statusText}`
+      );
+    }
 
+    const text = await response.text();
+
+    try {
+      translations = JSON.parse(text);
+    } catch (parseErr) {
+      throw new Error(`data.json has invalid JSON: ${parseErr.message}`);
+    }
+
+    console.log("✅ Translations loaded:", Object.keys(translations));
     applyLanguage(savedLang);
   } catch (error) {
-    console.error("Error loading translations:", error);
+    console.error("❌ Translation error:", error.message);
   }
 }
 
@@ -123,7 +152,6 @@ window.addEventListener("DOMContentLoaded", () => {
       circle.addEventListener("mouseenter", () => {
         hoverAudio.pause();
         hoverAudio.currentTime = 0;
-
         hoverAudio.play().catch((error) => {
           console.log("Browser blocked hover audio:", error);
         });

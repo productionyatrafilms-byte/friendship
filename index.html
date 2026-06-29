@@ -439,7 +439,7 @@
       <div class="language-container">
         <div class="english active">E</div>
         <div class="hindi">H</div>
-        <div class="gujarati">G</div>
+        <div class="gujrati">G</div>
       </div>
 
       <main>
@@ -569,6 +569,13 @@
       </div>
     </div>
 
+    <!-- Audios -->
+    <audio id="startAudio" src="./assets/audio/2.mp3" preload="auto"></audio>
+
+    <audio id="engAudio" src="./assets/audio/Eng.mpeg" preload="auto"></audio>
+    <audio id="hinAudio" src="./assets/audio/Hin.mpeg" preload="auto"></audio>
+    <audio id="gujAudio" src="./assets/audio/Guj.mpeg" preload="auto"></audio>
+
     <script src="./assets/js/app.js"></script>
 
     <script>
@@ -594,8 +601,43 @@
       const fullscreenBtn = document.querySelector(".fullscreen-btn");
       const fullscreenIcon = fullscreenBtn.querySelector("i");
 
+      const englishBtn = document.querySelector(".english");
+      const hindiBtn = document.querySelector(".hindi");
+      const gujratiBtn = document.querySelector(".gujrati");
+
+      const startAudio = document.getElementById("startAudio");
+      const engAudio = document.getElementById("engAudio");
+      const hinAudio = document.getElementById("hinAudio");
+      const gujAudio = document.getElementById("gujAudio");
+
       let controlsTimer;
       let lastVolume = 1;
+
+      function stopAllClickAudio() {
+        const audios = [startAudio, engAudio, hinAudio, gujAudio];
+
+        audios.forEach((audio) => {
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
+        });
+      }
+
+      function playAudio(audio) {
+        if (!audio) return;
+
+        stopAllClickAudio();
+        audio.currentTime = 0;
+
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log("Audio not playing. Check file path or browser:", error);
+          });
+        }
+      }
 
       function formatTime(time) {
         if (!time || isNaN(time)) return "0:00";
@@ -744,8 +786,26 @@
       }
 
       if (startVideoBtn) {
-        startVideoBtn.addEventListener("click", openVideoPopup);
+        startVideoBtn.addEventListener("click", () => {
+          playAudio(startAudio);
+
+          setTimeout(() => {
+            openVideoPopup();
+          }, 500);
+        });
       }
+
+      englishBtn?.addEventListener("click", () => {
+        playAudio(engAudio);
+      });
+
+      hindiBtn?.addEventListener("click", () => {
+        playAudio(hinAudio);
+      });
+
+      gujratiBtn?.addEventListener("click", () => {
+        playAudio(gujAudio);
+      });
 
       if (closeVideoBtn) {
         closeVideoBtn.addEventListener("click", closeVideoPopup);
