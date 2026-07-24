@@ -43,18 +43,21 @@
 
       .video-btn {
         position: fixed;
-        top: 3vw;
-        left: 4%;
+        top: 2vw;
+        left: 2vw;
         z-index: 50;
       }
 
       .start-video-btn {
-        width: 10vw;
-        height: 3.5vw;
+        width: 14.5vw;
+        height: 6vw;
         border-radius: 10vw;
-        background: #6168ea;
-        box-shadow: 0.2vw 0.2vw 0.3vw rgba(0, 0, 0, 0.829);
-        display: flex;
+        background-color: transparent;
+        background-image: url("./assets/images/watch.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border: none;
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
@@ -63,27 +66,8 @@
         transition:
           transform 0.25s ease,
           box-shadow 0.25s ease;
-        border: 0.2vw solid white;
       }
 
-      .start-video-btn:hover {
-        transform: scale(1.03);
-      }
-
-      .start-video-btn:active {
-        transform: scale(0.98);
-      }
-
-      .play-icon {
-        width: 2vw;
-        height: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #f6ed76;
-        font-size: 1.8vw;
-        filter: drop-shadow(0 0.15vw 0.15vw rgba(0, 0, 0, 0.25));
-      }
 
       .play-icon i,
       .close-video-btn i,
@@ -94,13 +78,6 @@
         justify-content: center;
         text-align: center;
         flex: 0 0 auto;
-      }
-
-      .play-icon i {
-        width: 1.6vw;
-        min-width: 1.6vw;
-        max-width: 1.6vw;
-        font-size: 1.5vw;
       }
 
       .close-video-btn i {
@@ -122,13 +99,25 @@
       }
 
       .start-text {
-        font-size: 2.3vw;
+        font-size: 2vw;
         font-weight: 900;
         letter-spacing: 0.2vw;
-        color: #f6ed76;
+        color: #6168EA;
         line-height: 1;
         font-family: "MouseMemoirs";
+        text-align: end;
+        width: 100%!important;
+        margin-left:3vw!important;
+        word-wrap: normal;
+        white-space: nowrap;
+        /* background-color: red; */
       }
+
+          html[lang="Hindi"] .start-text,
+    html[lang="Gujarati"] .start-text {
+      font-size: 1.4vw!important;
+    }
+
 
       .video-popup {
         position: fixed;
@@ -425,10 +414,8 @@
     <div class="page-content">
       <div class="video-btn">
         <button class="start-video-btn" type="button">
-          <span class="play-icon">
-            <i class="fa-solid fa-play"></i>
-          </span>
-          <span class="start-text">START</span>
+
+          <span class="start-text" data-lang-key="watch"></span>
         </button>
       </div>
 
@@ -439,7 +426,7 @@
       <div class="language-container">
         <div class="english active">E</div>
         <div class="hindi">H</div>
-        <div class="gujrati">G</div>
+        <div class="gujarati">G</div>
       </div>
 
       <main>

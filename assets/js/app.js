@@ -11,6 +11,32 @@ const VALID_LANGS = ["English", "Hindi", "Gujarati"];
 
 let translations = {};
 
+// Language click audios (renamed to avoid clashing with page-specific inline scripts
+// that declare their own engAudio/hinAudio/gujAudio consts)
+const langEngAudio = document.getElementById("engAudio");
+const langHinAudio = document.getElementById("hinAudio");
+const langGujAudio = document.getElementById("gujAudio");
+
+function playLangAudio(audio) {
+  if (!audio) return;
+
+  [langEngAudio, langHinAudio, langGujAudio].forEach((a) => {
+    if (a) {
+      a.pause();
+      a.currentTime = 0;
+    }
+  });
+
+  audio.currentTime = 0;
+  const playPromise = audio.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch((error) => {
+      console.log("Audio not playing. Check file path or browser:", error);
+    });
+  }
+}
+
 function getSavedLang() {
   const saved = localStorage.getItem(LANG_KEY);
   return VALID_LANGS.includes(saved) ? saved : DEFAULT_LANG;
@@ -142,9 +168,20 @@ window.addEventListener("DOMContentLoaded", () => {
   loadTranslations();
   setActivePage();
 
-  btnEn?.addEventListener("click", () => applyLanguage("English"));
-  btnHi?.addEventListener("click", () => applyLanguage("Hindi"));
-  btnGu?.addEventListener("click", () => applyLanguage("Gujarati"));
+  btnEn?.addEventListener("click", () => {
+    playLangAudio(langEngAudio);
+    applyLanguage("English");
+  });
+
+  btnHi?.addEventListener("click", () => {
+    playLangAudio(langHinAudio);
+    applyLanguage("Hindi");
+  });
+
+  btnGu?.addEventListener("click", () => {
+    playLangAudio(langGujAudio);
+    applyLanguage("Gujarati");
+  });
 
   document
     .querySelectorAll(".circle-2, .circle-3, .circle-4")
