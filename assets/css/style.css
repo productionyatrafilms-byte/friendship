@@ -27,10 +27,29 @@
     @font-face {
       font-family: "NotoSansGujaratiRegular";
       src: url("../../fonts/NotoSansGujarati-Regular.ttf") format("truetype");
-      font-weight: 400;
+      font-weight: 700!important;
       font-style: normal;
       font-display: swap;
     }
+
+    @font-face {
+  font-family: "ITFDevanagari";
+  src: url("../../fonts/ITFDevanagari.ttc") format("truetype");
+  font-weight: 700!important;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+body[data-lang="hi"] {
+  font-family: "ITFDevanagari"!important;
+  font-weight: 700!important;
+}
+
+body[data-lang="gu"] {
+      font-family: "NotoSansGujaratiRegular"!important;
+  font-weight: 700!important;
+}
 
     *::before,
     *::after {
@@ -51,7 +70,6 @@
     body {
       width: 100vw !important;
       height: auto;
-
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -465,13 +483,13 @@
     .swiper-text {
       color: white;
       padding: 2.5vw 0;
-      font-size: 4vw;
+      font-size: 2.8vw;
       text-align: center;
     }
 
         html[lang="Hindi"] .swiper-text,
     html[lang="Gujarati"] .swiper-text {
-      font-size: 2.9vw;
+      font-size: 2.2vw;
       font-weight: bolder;
     }
 
@@ -621,6 +639,25 @@
       display: block;
     }
 
+    .pranam-gif{
+      position: absolute;
+      width: 28vw;
+      height: 28vw;
+      background-color: white;
+      left: 51%;
+      top:48.5%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+    }
+
+    .pranam-gif img{
+    position: absolute;
+    width: 100%;
+       left: 48%;
+      top:50%;
+      object-fit: cover;
+      transform: translate(-50%,-50%);
+    }
     .pranam-img span {
       z-index: 15;
       position: absolute;
