@@ -27,29 +27,29 @@
     @font-face {
       font-family: "NotoSansGujaratiRegular";
       src: url("../../fonts/NotoSansGujarati-Regular.ttf") format("truetype");
-      font-weight: 700!important;
+      font-weight: 700 !important;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-  font-family: "ITFDevanagari";
-  src: url("../../fonts/ITFDevanagari.ttc") format("truetype");
-  font-weight: 700!important;
-  font-style: normal;
-  font-display: swap;
-}
+      font-family: "ITFDevanagari";
+      src: url("../../fonts/ITFDevanagari.ttc") format("truetype");
+      font-weight: 700 !important;
+      font-style: normal;
+      font-display: swap;
+    }
 
 
-body[data-lang="hi"] {
-  font-family: "ITFDevanagari"!important;
-  font-weight: 700!important;
-}
+    body[data-lang="hi"] {
+      font-family: "ITFDevanagari" !important;
+      font-weight: 700 !important;
+    }
 
-body[data-lang="gu"] {
-      font-family: "NotoSansGujaratiRegular"!important;
-  font-weight: 700!important;
-}
+    body[data-lang="gu"] {
+      font-family: "NotoSansGujaratiRegular" !important;
+      font-weight: 700 !important;
+    }
 
     *::before,
     *::after {
@@ -487,7 +487,7 @@ body[data-lang="gu"] {
       text-align: center;
     }
 
-        html[lang="Hindi"] .swiper-text,
+    html[lang="Hindi"] .swiper-text,
     html[lang="Gujarati"] .swiper-text {
       font-size: 2.2vw;
       font-weight: bolder;
@@ -639,23 +639,23 @@ body[data-lang="gu"] {
       display: block;
     }
 
-      .pranam-video{
-    position: absolute;
-    left: 51%;
-    top: 49%;
-    transform: translate(-50%,-50%);
-    width: 28vw;
-    height: 28vw;
-    border-radius: 50%;
-background-color: white;
-  }
+    .pranam-video {
+      position: absolute;
+      left: 50%;
+      top: 48.7%;
+      transform: translate(-50%, -50%);
+      width: 28vw;
+      height: 28vw;
+      border-radius: 50%;
+      background-color: white;
+    }
 
-  .pranam-video video{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
+    .pranam-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
     .pranam-img span {
       z-index: 15;
@@ -735,52 +735,52 @@ background-color: white;
     .pranam-img span {
       color: #802922;
     }
-    
-  .pranam-link {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    right: 5vw;
-    top: 39vw;
-    width: 9vw;
-    height: auto;
-    text-decoration: none;
-    z-index: 9999;
-    pointer-events: auto;
-    cursor: pointer;
-    animation: pranamPop 1.2s ease-in-out infinite;
-    transform-origin: center;
-  }
-    
-.pranam-link img {
-  position: relative;
-  width: 100%;
-  display: block;
-  object-fit: contain;
-}
 
-.pranam-link span {
-  position: absolute;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  font-size: 1.3vw;
-  padding-right: 1vw;
-    font-family: "BalooRegular";
+    .pranam-link {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      right: 5vw;
+      top: 39vw;
+      width: 9vw;
+      height: auto;
+      text-decoration: none;
+      z-index: 9999;
+      pointer-events: auto;
+      cursor: pointer;
+      animation: pranamPop 1.2s ease-in-out infinite;
+      transform-origin: center;
+    }
 
-}
+    .pranam-link img {
+      position: relative;
+      width: 100%;
+      display: block;
+      object-fit: contain;
+    }
 
-@keyframes pranamPop {
-  0% {
-    transform: scale(1);
-  }
+    .pranam-link span {
+      position: absolute;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3vw;
+      padding-right: 1vw;
+      font-family: "BalooRegular";
 
-  50% {
-    transform: scale(1.12);
-  }
+    }
 
-  100% {
-    transform: scale(1);
-  }
-}
+    @keyframes pranamPop {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.12);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
