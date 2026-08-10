@@ -236,8 +236,11 @@
         width: 100%;
         display: flex;
         align-items: center;
+        padding: 0.4vw 0;
+        cursor: pointer;
       }
 
+      /* SEEKING ENABLED */
       .video-progress {
         width: 100%;
         appearance: none;
@@ -245,9 +248,14 @@
         height: 0.45vw;
         border-radius: 5vw;
         background: rgba(255, 255, 255, 0.35);
-        cursor: default;
+        cursor: pointer;
         overflow: hidden;
-        pointer-events: none;
+        pointer-events: auto;
+        transition: height 0.2s ease;
+      }
+
+      .progress-wrap:hover .video-progress {
+        height: 0.65vw;
       }
 
       .video-progress::-webkit-slider-thumb {
@@ -258,7 +266,7 @@
         border-radius: 50%;
         background: #ffe137;
         box-shadow: -70vw 0 0 69.6vw #ffe137;
-        cursor: default;
+        cursor: pointer;
       }
 
       .video-progress::-moz-range-thumb {
@@ -267,7 +275,7 @@
         border: none;
         border-radius: 50%;
         background: #ffe137;
-        cursor: default;
+        cursor: pointer;
       }
 
       .video-progress::-moz-range-progress {
@@ -391,6 +399,35 @@
         transform: translate(-50%, -50%) scale(1.08);
       }
 
+      .seek-toast {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0.6vw 1.1vw;
+        border-radius: 0.6vw;
+        background: rgba(0, 0, 0, 0.55);
+        color: #ffe137;
+        font-size: 1.1vw;
+        font-weight: 700;
+        font-family: Arial, sans-serif;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 6;
+        transition: opacity 0.2s ease;
+      }
+
+      .seek-toast.show {
+        opacity: 1;
+      }
+
+      .seek-toast.backward {
+        left: 8%;
+      }
+
+      .seek-toast.forward {
+        right: 8%;
+      }
+
       .video-box:fullscreen {
         width: 100%;
         height: 100%;
@@ -431,6 +468,7 @@
 
       <main>
         <a class="circle circle-2" href="what-is-friendship.html">
+          <img src="./assets/images/ecllipse.png" class="hightlight" alt="">
           <img src="./assets/images/plain-circle.png" alt="" />
           <img
             class="expression-5"
@@ -441,6 +479,8 @@
         </a>
 
         <a class="circle circle-3" href="why-do-we-need-friend.html">
+                    <img src="./assets/images/ecllipse.png" class="hightlight" alt="">
+
           <img src="./assets/images/plain-circle.png" alt="" />
           <img
             class="expression-6"
@@ -451,6 +491,8 @@
         </a>
 
         <a class="circle circle-4" href="friendship-grow.html">
+                    <img src="./assets/images/ecllipse.png" class="hightlight" alt="">
+
           <img src="./assets/images/plain-circle.png" alt="" />
           <img
             class="expression-7"
@@ -505,6 +547,9 @@
             <i class="fa-solid fa-play"></i>
           </button>
 
+          <div class="seek-toast backward">-10s</div>
+          <div class="seek-toast forward">+10s</div>
+
           <div class="custom-controls">
             <div class="progress-wrap">
               <input
@@ -514,15 +559,21 @@
                 max="100"
                 value="0"
                 step="0.1"
-                tabindex="-1"
-                aria-hidden="true"
               />
             </div>
 
             <div class="control-row">
               <div class="control-left">
+                <button class="control-btn rewind-btn" type="button" title="Back 10s">
+                  <i class="fa-solid fa-backward"></i>
+                </button>
+
                 <button class="control-btn play-pause-btn" type="button">
                   <i class="fa-solid fa-play"></i>
+                </button>
+
+                <button class="control-btn forward-btn" type="button" title="Forward 10s">
+                  <i class="fa-solid fa-forward"></i>
                 </button>
 
                 <div class="time-text">
@@ -578,6 +629,12 @@
       const playPauseIcon = playPauseBtn.querySelector("i");
       const centerPlayIcon = centerPlayBtn.querySelector("i");
 
+      const rewindBtn = document.querySelector(".rewind-btn");
+      const forwardBtn = document.querySelector(".forward-btn");
+
+      const seekToastBack = document.querySelector(".seek-toast.backward");
+      const seekToastFwd = document.querySelector(".seek-toast.forward");
+
       const videoProgress = document.querySelector(".video-progress");
       const currentTimeText = document.querySelector(".current-time");
       const totalTimeText = document.querySelector(".total-time");
@@ -597,8 +654,12 @@
       const hinAudio = document.getElementById("hinAudio");
       const gujAudio = document.getElementById("gujAudio");
 
+      const SKIP_SECONDS = 10;
+
       let controlsTimer;
+      let seekToastTimer;
       let lastVolume = 1;
+      let isSeeking = false;
 
       function stopAllClickAudio() {
         const audios = [startAudio, engAudio, hinAudio, gujAudio];
@@ -699,13 +760,67 @@
       function updateProgress() {
         if (!popupVideo.duration) return;
 
+        totalTimeText.textContent = formatTime(popupVideo.duration);
+
+        if (isSeeking) return;
+
         const progressValue =
           (popupVideo.currentTime / popupVideo.duration) * 100;
 
         videoProgress.value = progressValue;
         currentTimeText.textContent = formatTime(popupVideo.currentTime);
-        totalTimeText.textContent = formatTime(popupVideo.duration);
       }
+
+      /* ---------- SEEK LOGIC ---------- */
+
+      function showSeekToast(direction) {
+        const toast = direction > 0 ? seekToastFwd : seekToastBack;
+
+        seekToastFwd.classList.remove("show");
+        seekToastBack.classList.remove("show");
+        toast.classList.add("show");
+
+        clearTimeout(seekToastTimer);
+        seekToastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 600);
+      }
+
+      function skipTime(seconds) {
+        if (!popupVideo.duration) return;
+
+        let newTime = popupVideo.currentTime + seconds;
+
+        if (newTime < 0) newTime = 0;
+        if (newTime > popupVideo.duration) newTime = popupVideo.duration;
+
+        popupVideo.currentTime = newTime;
+
+        updateProgress();
+        showSeekToast(seconds);
+        showControlsTemporarily();
+      }
+
+      function seekFromProgress() {
+        if (!popupVideo.duration) return;
+
+        const newTime =
+          (Number(videoProgress.value) / 100) * popupVideo.duration;
+
+        popupVideo.currentTime = newTime;
+        currentTimeText.textContent = formatTime(newTime);
+      }
+
+      function previewSeekTime() {
+        if (!popupVideo.duration) return;
+
+        const previewTime =
+          (Number(videoProgress.value) / 100) * popupVideo.duration;
+
+        currentTimeText.textContent = formatTime(previewTime);
+      }
+
+      /* -------------------------------- */
 
       function updateMuteIcon() {
         if (popupVideo.muted || popupVideo.volume === 0) {
@@ -765,7 +880,7 @@
 
         clearTimeout(controlsTimer);
 
-        if (!popupVideo.paused) {
+        if (!popupVideo.paused && !isSeeking) {
           controlsTimer = setTimeout(() => {
             videoFrame.classList.add("controls-hidden");
           }, 2200);
@@ -812,10 +927,23 @@
         popupVideo.addEventListener("pause", updatePlayIcons);
         popupVideo.addEventListener("timeupdate", updateProgress);
         popupVideo.addEventListener("loadedmetadata", updateProgress);
+        popupVideo.addEventListener("durationchange", updateProgress);
+        popupVideo.addEventListener("seeked", updateProgress);
         popupVideo.addEventListener("ended", updatePlayIcons);
 
         popupVideo.addEventListener("contextmenu", function (e) {
           e.preventDefault();
+        });
+
+        popupVideo.addEventListener("dblclick", function (e) {
+          const rect = popupVideo.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+
+          if (clickX < rect.width / 2) {
+            skipTime(-SKIP_SECONDS);
+          } else {
+            skipTime(SKIP_SECONDS);
+          }
         });
       }
 
@@ -824,6 +952,39 @@
       muteBtn.addEventListener("click", toggleMute);
       volumeRange.addEventListener("input", changeVolume);
       fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+      rewindBtn.addEventListener("click", () => skipTime(-SKIP_SECONDS));
+      forwardBtn.addEventListener("click", () => skipTime(SKIP_SECONDS));
+
+      /* Progress bar drag / click seeking */
+      videoProgress.addEventListener("pointerdown", () => {
+        isSeeking = true;
+      });
+
+      videoProgress.addEventListener("input", () => {
+        isSeeking = true;
+        previewSeekTime();
+      });
+
+      videoProgress.addEventListener("change", () => {
+        seekFromProgress();
+        isSeeking = false;
+        showControlsTemporarily();
+      });
+
+      videoProgress.addEventListener("pointerup", () => {
+        seekFromProgress();
+        isSeeking = false;
+        showControlsTemporarily();
+      });
+
+      document.addEventListener("pointerup", () => {
+        if (isSeeking) {
+          seekFromProgress();
+          isSeeking = false;
+          showControlsTemporarily();
+        }
+      });
 
       videoFrame.addEventListener("mousemove", showControlsTemporarily);
       videoFrame.addEventListener("click", showControlsTemporarily);
@@ -840,6 +1001,16 @@
         if (e.code === "Space") {
           e.preventDefault();
           togglePlay();
+        }
+
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          skipTime(SKIP_SECONDS);
+        }
+
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          skipTime(-SKIP_SECONDS);
         }
 
         if (e.key.toLowerCase() === "m") {
