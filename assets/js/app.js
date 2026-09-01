@@ -137,30 +137,7 @@ async function loadTranslations() {
     const savedLang = getSavedLang();
     setLanguageAttribute(savedLang);
 
-    const basePath =
-      window.location.origin +
-      window.location.pathname.substring(
-        0,
-        window.location.pathname.lastIndexOf("/") + 1
-      );
-
-    const response = await fetch(`${basePath}assets/json/data.json`, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Could not load data.json — HTTP ${response.status}: ${response.statusText}`
-      );
-    }
-
-    const text = await response.text();
-
-    try {
-      translations = JSON.parse(text);
-    } catch (parseErr) {
-      throw new Error(`data.json has invalid JSON: ${parseErr.message}`);
-    }
+    translations = typeof data !== "undefined" ? data : {};
 
     console.log("✅ Translations loaded:", Object.keys(translations));
     applyLanguage(savedLang);
