@@ -83,77 +83,77 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/6.mp4" autoplay muted loop></video>
+              <video src="./assets/video/6.mp4" autoplay muted loop preload="auto"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.1"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/7.mp4" autoplay muted loop></video>
+              <video src="./assets/video/7.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.2"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/8.mp4" autoplay muted loop></video>
+              <video src="./assets/video/8.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.3"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/9.mp4" autoplay muted loop></video>
+              <video src="./assets/video/9.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.4"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/10.mp4" autoplay muted loop></video>
+              <video src="./assets/video/10.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.5"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/11.mp4" autoplay muted loop></video>
+              <video src="./assets/video/11.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.6"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/12.mp4" autoplay muted loop></video>
+              <video src="./assets/video/12.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.7"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/13.mp4" autoplay muted loop></video>
+              <video src="./assets/video/13.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.8"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/14.mp4" autoplay muted loop></video>
+              <video src="./assets/video/14.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.9"></div>
           </div>
 
            <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/16.mp4" autoplay muted loop></video>
+              <video src="./assets/video/16.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.11"></div>
           </div>
 
           <div class="swiper-slide">
             <div class="image-box">
-              <video src="./assets/video/15.mp4" autoplay muted loop></video>
+              <video src="./assets/video/15.mp4" muted loop preload="none"></video>
             </div>
             <div class="swiper-text" data-lang-key="slide-3.10"></div>
           </div>
@@ -189,7 +189,6 @@
     <audio id="gujAudio" src="./assets/audio/Guj.mpeg" preload="auto"></audio>
 
        <script src="./assets/js/swiper-bundle.min.js"></script>
-    <script src="./assets/js/djp.js"></script>
    <script>
   const prevBtn = document.querySelector(".custom-prev");
   const nextBtn = document.querySelector(".custom-next");
@@ -223,6 +222,38 @@
       },
     },
   });
+
+  // Only the active slide video loads and plays; inactive ones stay unloaded
+  const slideVideos = Array.from(
+    document.querySelectorAll(".mySwiper .swiper-slide video"),
+  );
+
+  function syncSlideVideos() {
+    slideVideos.forEach((video, index) => {
+      if (index === swiper.activeIndex) {
+        video.preload = "auto";
+
+        if (video.paused) {
+          video.currentTime = 0;
+          video.play().catch(() => {});
+        }
+      } else {
+        video.preload = "none";
+      }
+    });
+  }
+
+  function pauseInactiveSlideVideos() {
+    slideVideos.forEach((video, index) => {
+      if (index !== swiper.activeIndex && !video.paused) {
+        video.pause();
+      }
+    });
+  }
+
+  syncSlideVideos();
+  swiper.on("slideChange", syncSlideVideos);
+  swiper.on("slideChangeTransitionEnd", pauseInactiveSlideVideos);
 
   function updateNavButtons(swiperInstance) {
     // Hide prev button on first slide
